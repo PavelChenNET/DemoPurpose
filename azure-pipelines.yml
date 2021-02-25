@@ -16,5 +16,18 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SONAR_TOKEN'
+    organization: 'pavelchennet'
+    scannerMode: 'MSBuild'
+    projectKey: 'DemoPurpose'
+    projectName: 'DemoPurpose'
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
