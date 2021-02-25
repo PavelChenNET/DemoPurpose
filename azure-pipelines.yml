@@ -5,9 +5,6 @@
 
 trigger:
 - main
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
 
 pool:
   vmImage: ubuntu-latest
@@ -16,6 +13,13 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'SONAR_TOKEN'
