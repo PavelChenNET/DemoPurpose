@@ -22,8 +22,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: build
-    projects: '**/TestingDemo/WebApplication1/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+- task: VSBuild@1
+  inputs:
+    solution: 'DemoPurpose\TestingDemo\*.sln'
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    vsVersion: '15.0'
     
 - task: SonarCloudPrepare@1
   inputs:
